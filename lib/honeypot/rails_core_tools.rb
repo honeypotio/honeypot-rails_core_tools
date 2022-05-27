@@ -6,7 +6,13 @@ require 'digest'
 
 module Honeypot
   module Graphql
-    def self.id_from_object(object, *_args)
+    extend self
+
+    def resolve_type(_abstract_type, obj, _ctx)
+      "Types::#{obj.class.name}".constantize
+    end
+
+    def id_from_object(object, *_args)
       return 'NULL' if object.id.nil?
 
       type = object.class.name
@@ -16,7 +22,7 @@ module Honeypot
       Base64.urlsafe_encode64(signed_id).gsub('=', '')
     end
 
-    def self.object_from_id(graphql_id, *_args)
+    def object_from_id(graphql_id, *_args)
       return if graphql_id == 'NULL'
 
       graphql_id = Base64.urlsafe_decode64(graphql_id)
@@ -30,7 +36,7 @@ module Honeypot
     end
 
     # sign the ids to prevent enumeration attacks
-    def self.digest(id)
+    def digest(id)
       Digest::MD5.hexdigest("#{id}_#{AppConfig.secret_key_base}")[0..5]
     end
   end
