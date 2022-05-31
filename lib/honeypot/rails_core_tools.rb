@@ -29,6 +29,8 @@ module Honeypot
       type, id, provided_digest = graphql_id.split('.')
       type_and_id = "#{type}.#{id}"
 
+      return if type.nil? && id.nil? && provided_digest.nil?
+
       raise 'Invalid digest' if provided_digest != digest(type_and_id)
 
       gid = "gid://#{GlobalID.app}/#{type}/#{id}"
