@@ -35,6 +35,8 @@ module Honeypot
 
       gid = "gid://#{GlobalID.app}/#{type}/#{id}"
       GlobalID::Locator.locate(gid)
+    rescue ArgumentError # base64 cannot be parsed
+      nil
     end
 
     # sign the ids to prevent enumeration attacks

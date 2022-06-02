@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'honeypot-rails_core_tools'
-  spec.version       = '0.0.4'
+  spec.version       = '0.0.5'
   spec.authors       = ['Andrzej Trzaska']
   spec.email         = ['atrzaska2@gmail.com']
 
