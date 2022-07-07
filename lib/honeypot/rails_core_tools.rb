@@ -23,7 +23,7 @@ module Honeypot
     end
 
     def object_from_id(graphql_id, *_args)
-      return if graphql_id == 'NULL'
+      return if graphql_id == 'NULL' || graphql_id.nil?
 
       graphql_id = Base64.urlsafe_decode64(graphql_id)
       type, id, provided_digest = graphql_id.split('.')
